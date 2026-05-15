@@ -1,0 +1,21 @@
+{
+  "name": "arc-testnet-notes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Arc public testnet notes, HelloArchitect contract, and AI-agent settlement workflow demo.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "validate": "node scripts/validate-project.mjs",
+    "check": "npm run validate && npm test"
+  },
+  "keywords": [
+    "arc",
+    "testnet",
+    "usdc",
+    "ai-agents",
+    "solidity",
+    "foundry"
+  ],
+  "license": "MIT"
+}

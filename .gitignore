@@ -1,0 +1,15 @@
+# local secrets / environment
+.env
+.env.*
+!.env.example
+
+# Foundry / Solidity build output
+out/
+cache/
+broadcast/
+
+# OS/editor
+.DS_Store
+.vscode/
+node_modules/
+lib/

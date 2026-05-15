@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Arc Agent Settlement Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Arc public testnet notes</p>
+        <h1>AI-agent settlement workflow</h1>
+        <p class="subcopy">A lightweight demo model for task quote → USDC payment request → Arc testnet settlement record.</p>
+      </section>
+
+      <section class="panel">
+        <div>
+          <label>Task title</label>
+          <input id="title" value="Review Arc faucet onboarding" />
+        </div>
+        <div>
+          <label>Budget, USDC</label>
+          <input id="budget" value="12.50" type="number" step="0.01" min="0" />
+        </div>
+        <button id="simulate">Generate settlement preview</button>
+      </section>
+
+      <section class="cards" aria-live="polite">
+        <article class="card">
+          <span>1</span>
+          <h2>Quote</h2>
+          <pre id="task"></pre>
+        </article>
+        <article class="card">
+          <span>2</span>
+          <h2>Payment request</h2>
+          <pre id="payment"></pre>
+        </article>
+        <article class="card">
+          <span>3</span>
+          <h2>Settlement target</h2>
+          <pre id="settlement"></pre>
+        </article>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
