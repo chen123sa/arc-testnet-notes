@@ -93,6 +93,12 @@ The first demo models a simple workflow:
 
 Current version keeps the offchain state model small and testable, while `AgentTaskEscrow` provides the first onchain task-settlement contract for Arc testnet deployment.
 
+
+## Field reports
+
+- [`docs/field-report-2026-05-15.md`](docs/field-report-2026-05-15.md) — first Arc testnet builder run: faucet funding, Foundry tests, deployments, and verification calls.
+- [`ROADMAP.md`](ROADMAP.md) — planned next steps for contract interaction proof and demo integration.
+
 ## Structured feedback
 
 This repo is also a place to capture useful feedback for Arc onboarding:
