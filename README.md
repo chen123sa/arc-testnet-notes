@@ -72,6 +72,18 @@ You can also use the helper script:
 ./scripts/deploy-hello-architect.sh
 ```
 
+To run the `AgentTaskEscrow` demo interaction after deployment:
+
+```bash
+export AGENT_TASK_ESCROW_ADDRESS=0x...
+export REQUESTER_PRIVATE_KEY=0x...     # dedicated testnet requester only
+export WORKER_PRIVATE_KEY=0x...        # dedicated testnet worker only
+export AGENT_TASK_BUDGET_WEI=10000000000000000
+forge script script/InteractAgentTaskEscrow.s.sol:InteractAgentTaskEscrow \
+  --rpc-url "$ARC_TESTNET_RPC_URL" \
+  --broadcast
+```
+
 Never use a real/mainnet private key.
 
 ## Arc Testnet network details
@@ -118,6 +130,7 @@ See [`feedback-template.md`](feedback-template.md) and [`docs/deployment-log.md`
 - Solidity contracts and Foundry tests: ready and passing
 - Arc testnet deployment: completed for `HelloArchitect` and `AgentTaskEscrow`
 - Deployment proof: see [`docs/deployment-log.md`](docs/deployment-log.md)
+- AgentTaskEscrow interaction flow: completed
 
 ### Latest Arc Testnet contracts
 
