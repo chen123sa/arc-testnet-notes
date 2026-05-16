@@ -18,9 +18,15 @@ function render() {
   const payment = createPaymentRequest(task);
   const settlement = {
     chain: 'Arc Testnet',
-    status: 'ready_for_testnet_transaction',
-    explorerPattern: 'https://testnet.arcscan.app/tx/<txHash>',
-    note: 'Replace this with a real tx hash after faucet funding and deployment.',
+    contract: '0xcc4e744a125fe5f89b29810309b1fc0bf4a8486b',
+    status: 'deployed_and_interaction_proven',
+    lifecycle: ['fundTask', 'submitDeliverable', 'releasePayment', 'refund_before_submission'],
+    explorer: 'https://testnet.arcscan.app/address/0xcc4e744a125fe5f89b29810309b1fc0bf4a8486b',
+    proof: {
+      task2FundTx: '0x9025af5a569baca7fd543be7d5536a3d464692a300c55e8c57ab91bcf783462a',
+      task2SubmitTx: '0xe9de458e736223b32b9a083be2fbe6407740d2e745800645f6d24a84c8f54d5e',
+      task2ReleaseTx: '0x2d2fe0874ad2cc608018917241a361fc3d9089ea08958549becc469efe96c612',
+    },
   };
 
   taskEl.textContent = JSON.stringify(task, null, 2);

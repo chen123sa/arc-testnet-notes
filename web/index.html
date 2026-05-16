@@ -3,47 +3,144 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Arc Agent Settlement Demo</title>
+    <title>AgentTaskEscrow on Arc</title>
+    <meta
+      name="description"
+      content="A public Arc testnet demo for AI-agent task settlement: quote, fund, submit, release, and verify."
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <section class="hero">
-        <p class="eyebrow">Arc public testnet notes</p>
-        <h1>AI-agent settlement workflow</h1>
-        <p class="subcopy">A lightweight demo model for task quote → USDC payment request → Arc testnet settlement record.</p>
+    <header class="nav">
+      <a class="brand" href="#top" aria-label="AgentTaskEscrow home">
+        <span class="brand-mark">A</span>
+        <span>AgentTaskEscrow</span>
+      </a>
+      <nav aria-label="Demo sections">
+        <a href="#demo">Demo</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#proof">Proof</a>
+        <a href="../docs/hackathon-submission.md">Submission</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy">
+          <p class="eyebrow">Ignyte × Circle × Arc hackathon draft</p>
+          <h1>AI-agent task settlement on Arc public testnet.</h1>
+          <p class="subcopy">
+            A small working prototype for the agentic economy: a requester funds a task,
+            an AI-agent worker submits a deliverable, and payment is released or refunded
+            through an explorer-verifiable Arc workflow.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#demo">Run settlement preview</a>
+            <a class="button ghost" href="https://github.com/chen123sa/arc-testnet-notes">View GitHub</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Hackathon status">
+          <div class="metric">
+            <span>Track</span>
+            <strong>Best Agentic Economy Experience</strong>
+          </div>
+          <div class="metric">
+            <span>Network</span>
+            <strong>Arc Testnet</strong>
+          </div>
+          <div class="metric">
+            <span>Contract</span>
+            <strong>AgentTaskEscrow</strong>
+          </div>
+        </aside>
       </section>
 
-      <section class="panel">
-        <div>
-          <label>Task title</label>
-          <input id="title" value="Review Arc faucet onboarding" />
-        </div>
-        <div>
-          <label>Budget, USDC</label>
-          <input id="budget" value="12.50" type="number" step="0.01" min="0" />
-        </div>
-        <button id="simulate">Generate settlement preview</button>
+      <section class="section proof-strip" id="proof">
+        <a href="https://testnet.arcscan.app/address/0xcc4e744a125fe5f89b29810309b1fc0bf4a8486b">
+          AgentTaskEscrow deployed: 0xcc4e...486b
+        </a>
+        <a href="https://testnet.arcscan.app/address/0x44e2e0926e1c7b3207f6b97727ab829170bae22d">
+          HelloArchitect deployed: 0x44e2...ae22d
+        </a>
+        <a href="../docs/field-report-2026-05-15.md">Field report</a>
       </section>
 
-      <section class="cards" aria-live="polite">
-        <article class="card">
-          <span>1</span>
-          <h2>Quote</h2>
-          <pre id="task"></pre>
-        </article>
-        <article class="card">
-          <span>2</span>
-          <h2>Payment request</h2>
-          <pre id="payment"></pre>
-        </article>
-        <article class="card">
-          <span>3</span>
-          <h2>Settlement target</h2>
-          <pre id="settlement"></pre>
-        </article>
+      <section class="section workflow" id="demo">
+        <div class="section-heading">
+          <p class="eyebrow">Interactive MVP</p>
+          <h2>Preview the task → payment → settlement flow</h2>
+          <p>
+            This browser demo uses the repo's JavaScript settlement model. The deployed
+            contract proves the same lifecycle on Arc testnet: fund, submit deliverable,
+            release payment, or refund before submission.
+          </p>
+        </div>
+
+        <form class="panel" id="settlement-form">
+          <div>
+            <label for="title">Task title</label>
+            <input id="title" value="Review Arc faucet onboarding" />
+          </div>
+          <div>
+            <label for="budget">Budget, USDC</label>
+            <input id="budget" value="12.50" type="number" step="0.01" min="0" />
+          </div>
+          <button id="simulate" type="button">Generate preview</button>
+        </form>
+
+        <div class="cards" aria-live="polite">
+          <article class="card">
+            <span class="step">1</span>
+            <h3>Quote</h3>
+            <p>Requester intent becomes a structured task with a stablecoin budget.</p>
+            <pre id="task"></pre>
+          </article>
+          <article class="card">
+            <span class="step">2</span>
+            <h3>Payment request</h3>
+            <p>The task is converted into a payment request for agent settlement.</p>
+            <pre id="payment"></pre>
+          </article>
+          <article class="card">
+            <span class="step">3</span>
+            <h3>Arc settlement</h3>
+            <p>Explorer-verifiable contract state closes the loop.</p>
+            <pre id="settlement"></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section architecture" id="architecture">
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2>Designed for human approval and agent execution</h2>
+        </div>
+        <div class="architecture-grid">
+          <article>
+            <strong>Requester</strong>
+            <p>Defines task terms, funds escrow, reviews deliverable, and decides release.</p>
+          </article>
+          <article>
+            <strong>AI-agent worker</strong>
+            <p>Receives task context, produces deliverable, and submits a URI onchain.</p>
+          </article>
+          <article>
+            <strong>Arc contract</strong>
+            <p>Records funding, submission, release, and refund states on testnet.</p>
+          </article>
+          <article>
+            <strong>Verification</strong>
+            <p>Deployment logs, tests, and explorer links make the workflow reproducible.</p>
+          </article>
+        </div>
       </section>
     </main>
+
+    <footer class="footer">
+      <span>Testnet-only prototype. No real funds. No production escrow claims.</span>
+      <a href="../docs/circle-product-feedback.md">Circle Product Feedback</a>
+    </footer>
+
     <script type="module" src="./app.js"></script>
   </body>
 </html>

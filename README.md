@@ -137,6 +137,18 @@ See [`feedback-template.md`](feedback-template.md) and [`docs/deployment-log.md`
 - `HelloArchitect`: [`0x44e2e0926e1c7b3207f6b97727ab829170bae22d`](https://testnet.arcscan.app/address/0x44e2e0926e1c7b3207f6b97727ab829170bae22d)
 - `AgentTaskEscrow`: [`0xcc4e744a125fe5f89b29810309b1fc0bf4a8486b`](https://testnet.arcscan.app/address/0xcc4e744a125fe5f89b29810309b1fc0bf4a8486b)
 
+
+## Hackathon submission draft
+
+This repo is being prepared for the Ignyte / Circle / Arc Stablecoins Commerce Stack Challenge under the **Best Agentic Economy Experience on Arc** track.
+
+Submission materials:
+
+- [`docs/hackathon-submission.md`](docs/hackathon-submission.md)
+- [`docs/architecture.md`](docs/architecture.md)
+- [`docs/circle-product-feedback.md`](docs/circle-product-feedback.md)
+- [`docs/demo-script.md`](docs/demo-script.md)
+
 ## View the static demo
 
 Open `web/index.html` directly in a browser, or serve the repo with any static file server.
