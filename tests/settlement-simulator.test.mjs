@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createTask, createPaymentRequest, recordSettlement, toAtomicUsdc } from '../src/settlement-simulator.mjs';
+import {
+  applyGatewayWebhook,
+  createMockGatewayEvent,
+  createTask,
+  createPaymentRequest,
+  recordSettlement,
+  toAtomicUsdc,
+} from '../src/settlement-simulator.mjs';
 
 test('creates a task and payment request in USDC atomic units', () => {
   const task = createTask({
@@ -37,4 +44,31 @@ test('rejects invalid settlement hashes', () => {
 test('converts USDC to 6-decimal atomic units', () => {
   assert.equal(toAtomicUsdc(1), '1000000');
   assert.equal(toAtomicUsdc(0.42), '420000');
+});
+
+test('applies a mock Gateway deposit webhook to task state', () => {
+  const task = createTask({ title: 'Webhook task', requester: 'builder', worker: 'agent', budgetUsdc: 7.5 });
+  const seen = new Set();
+  const event = createMockGatewayEvent(task, { walletAddress: '0x1111111111111111111111111111111111111111' });
+  const result = applyGatewayWebhook(task, event, seen);
+
+  assert.equal(result.duplicate, false);
+  assert.equal(result.task.status, 'funded_pending_agent');
+  assert.equal(result.task.gateway.lastEventType, 'gateway.deposit.finalized');
+  assert.equal(result.task.auditLog.length, 1);
+  assert.equal(seen.has(event.notificationId), true);
+});
+
+test('dedupes repeated Gateway webhook notification IDs', () => {
+  const task = createTask({ title: 'Dedupe task', requester: 'builder', worker: 'agent', budgetUsdc: 2 });
+  const seen = new Set();
+  const event = createMockGatewayEvent(task, { notificationId: 'evt-1' });
+
+  const first = applyGatewayWebhook(task, event, seen);
+  const second = applyGatewayWebhook(first.task, event, seen);
+
+  assert.equal(first.duplicate, false);
+  assert.equal(second.duplicate, true);
+  assert.equal(second.task.auditLog.length, 1);
+  assert.equal(second.auditEntry.action, 'duplicate_ignored');
 });

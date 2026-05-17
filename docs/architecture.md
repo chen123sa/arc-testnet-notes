@@ -20,6 +20,7 @@ flowchart TD
   C -->|release or refund| D
   D -->|events + state reads| F[Arc Explorer / RPC]
   F -->|verification links| G[Field Report + Deployment Log]
+  H[Gateway Webhooks] -->|deposit / mint / forwarding events| B
 ```
 
 ## Onchain contract flow
@@ -40,6 +41,14 @@ Agentic payment workflows need predictable settlement and clear verification. Ar
 - simple explorer verification
 - a testnet environment suitable for payment workflow experiments
 
+## Gateway webhook extension
+
+The current demo verifies settlement with transaction hashes, contract reads, and explorer links. A production-grade agent workflow should also support event-driven payment monitoring.
+
+Gateway webhooks could notify the backend when a deposit or mint event is finalized for a registered wallet address. The task API can then dedupe the notification, update the task state, and notify the worker agent that a funded task is ready.
+
+See [`gateway-webhook-notes.md`](gateway-webhook-notes.md) for the proposed event-driven monitoring pattern.
+
 ## Current limitation
 
 The first contract uses native value for a minimal testnet learning flow. A production-grade version should add:
@@ -49,4 +58,5 @@ The first contract uses native value for a minimal testnet learning flow. A prod
 - dispute handling
 - reputation or identity integration
 - structured event indexing
+- Gateway webhook monitoring for payment/funding state changes
 - wallet UX using Circle Wallets

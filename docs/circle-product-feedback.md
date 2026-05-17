@@ -11,7 +11,7 @@ For this prototype:
 - **Arc public testnet** provides the execution environment for task settlement.
 - **USDC** is the target settlement unit for predictable task budgets.
 - **Circle Wallets** would be useful for agent-controlled and requester-controlled wallet UX.
-- **Circle Gateway** is a natural fit for future treasury routing and backend payment orchestration.
+- **Circle Gateway** is a natural fit for future treasury routing, backend payment orchestration, and webhook-based settlement monitoring.
 - **Nanopayments** are relevant for future pay-per-inference, pay-per-API-call, and streaming agent service payments.
 
 ## What worked well
@@ -26,6 +26,7 @@ For this prototype:
 - Onboarding docs could make multi-actor workflows more explicit. In this project, both requester and worker wallets needed native gas to complete the full lifecycle.
 - Faucet and wallet setup guidance could highlight that every actor submitting transactions needs funding.
 - Examples for agentic payment flows would benefit from a minimal requester / worker / settlement demo using Arc-native conventions.
+- Gateway webhook docs would be easier to adopt with a task-oriented sample that maps finalized deposit/mint events into application state transitions.
 - If a canonical testnet USDC contract should be used for demos, the docs should make the recommended address and flow easy to find.
 
 ## Recommendations
@@ -34,4 +35,5 @@ For this prototype:
 - Include a checklist for multi-wallet testnet workflows.
 - Provide a simple Circle Wallets + Arc example for controlled agent execution.
 - Provide a Nanopayments example for pay-per-call AI/API workflows.
+- Add a Gateway webhook receiver sample with dedupe, task-state updates, and audit logging.
 - Add a recommended architecture pattern for agent-initiated transactions with human approval boundaries.

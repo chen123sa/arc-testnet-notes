@@ -1,4 +1,9 @@
-import { createTask, createPaymentRequest } from '../src/settlement-simulator.mjs';
+import {
+  applyGatewayWebhook,
+  createMockGatewayEvent,
+  createTask,
+  createPaymentRequest,
+} from '../src/settlement-simulator.mjs';
 
 const title = document.querySelector('#title');
 const budget = document.querySelector('#budget');
@@ -6,6 +11,7 @@ const simulate = document.querySelector('#simulate');
 const taskEl = document.querySelector('#task');
 const paymentEl = document.querySelector('#payment');
 const settlementEl = document.querySelector('#settlement');
+const gatewayEl = document.querySelector('#gateway-audit');
 
 function render() {
   const task = createTask({
@@ -16,6 +22,13 @@ function render() {
     budgetUsdc: Number(budget.value),
   });
   const payment = createPaymentRequest(task);
+  const seenGatewayNotifications = new Set();
+  const gatewayEvent = createMockGatewayEvent(task, {
+    walletAddress: '0x1111111111111111111111111111111111111111',
+  });
+  const gatewayResult = applyGatewayWebhook(task, gatewayEvent, seenGatewayNotifications);
+  const duplicateGatewayResult = applyGatewayWebhook(gatewayResult.task, gatewayEvent, seenGatewayNotifications);
+
   const settlement = {
     chain: 'Arc Testnet',
     contract: '0xcc4e744a125fe5f89b29810309b1fc0bf4a8486b',
@@ -32,6 +45,16 @@ function render() {
   taskEl.textContent = JSON.stringify(task, null, 2);
   paymentEl.textContent = JSON.stringify(payment, null, 2);
   settlementEl.textContent = JSON.stringify(settlement, null, 2);
+  gatewayEl.textContent = JSON.stringify(
+    {
+      incomingEvent: gatewayEvent,
+      taskStatusAfterWebhook: gatewayResult.task.status,
+      auditLog: gatewayResult.task.auditLog,
+      duplicateReplay: duplicateGatewayResult.auditEntry,
+    },
+    null,
+    2,
+  );
 }
 
 simulate.addEventListener('click', render);

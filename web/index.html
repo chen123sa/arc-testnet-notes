@@ -20,6 +20,7 @@
         <a href="#demo">Demo</a>
         <a href="#architecture">Architecture</a>
         <a href="#proof">Proof</a>
+        <a href="#gateway">Gateway</a>
         <a href="../docs/hackathon-submission.md">Submission</a>
       </nav>
     </header>
@@ -108,6 +109,15 @@
             <pre id="settlement"></pre>
           </article>
         </div>
+
+        <article class="card gateway-card" id="gateway">
+          <span class="step">4</span>
+          <h3>Gateway webhook audit</h3>
+          <p>
+            A mocked Gateway event updates task state, records an audit entry, and ignores duplicate notification IDs.
+          </p>
+          <pre id="gateway-audit"></pre>
+        </article>
       </section>
 
       <section class="section architecture" id="architecture">
@@ -131,6 +141,10 @@
           <article>
             <strong>Verification</strong>
             <p>Deployment logs, tests, and explorer links make the workflow reproducible.</p>
+          </article>
+          <article>
+            <strong>Gateway webhook</strong>
+            <p>Mock events demonstrate how funding notifications can update task state without polling.</p>
           </article>
         </div>
       </section>

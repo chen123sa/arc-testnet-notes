@@ -10,6 +10,7 @@ Hands-on Arc public testnet project for contract deployment notes, structured bu
 - A small JavaScript model for task quote → USDC payment request → settlement record
 - A static browser demo for the AI-agent settlement flow
 - Wallet/faucet/deployment notes for reproducible Arc testnet feedback
+- Gateway webhook notes and a mock webhook audit flow for future AI-agent settlement monitoring
 
 ## Why Arc
 
@@ -25,7 +26,7 @@ script/*.s.sol                     Foundry deployment scripts
 src/settlement-simulator.mjs       AI-agent settlement state model
 tests/*.test.mjs                   Node tests for the settlement model
 web/                               Static demo UI
-docs/                              Wallet, faucet, deployment, and Discord notes
+docs/                              Wallet, faucet, deployment, webhook, and Discord notes
 examples/                          Example task/payment JSON
 ```
 
@@ -105,10 +106,13 @@ The first demo models a simple workflow:
 
 Current version keeps the offchain state model small and testable, while `AgentTaskEscrow` provides the first onchain task-settlement contract for Arc testnet deployment.
 
+The demo also includes a mock Gateway webhook audit path: a sample event updates task state, appends an audit row, and ignores duplicate notification IDs without using real Gateway credentials or funds.
+
 
 ## Field reports
 
 - [`docs/field-report-2026-05-15.md`](docs/field-report-2026-05-15.md) — first Arc testnet builder run: faucet funding, Foundry tests, deployments, and verification calls.
+- [`docs/gateway-webhook-notes.md`](docs/gateway-webhook-notes.md) — notes for using Gateway webhooks in AI-agent settlement monitoring.
 - [`ROADMAP.md`](ROADMAP.md) — planned next steps for contract interaction proof and demo integration.
 
 ## Structured feedback
@@ -120,6 +124,7 @@ This repo is also a place to capture useful feedback for Arc onboarding:
 - RPC / explorer friction
 - Foundry deployment errors
 - docs gaps and suggested improvements
+- event-driven monitoring patterns for Gateway/webhook-based settlement flows
 
 See [`feedback-template.md`](feedback-template.md) and [`docs/deployment-log.md`](docs/deployment-log.md).
 

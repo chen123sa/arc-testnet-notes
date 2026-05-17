@@ -153,6 +153,7 @@ input {
 input:focus { outline: 2px solid rgba(83, 58, 253, 0.18); border-color: var(--purple); }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .card { min-height: 390px; padding: 20px; }
+.gateway-card { margin-top: 16px; }
 .step {
   display: inline-grid;
   place-items: center;
@@ -175,7 +176,7 @@ pre {
   white-space: pre-wrap;
   word-break: break-word;
 }
-.architecture-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.architecture-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
 .architecture-grid article { padding: 20px; }
 .architecture-grid strong { font-size: 18px; }
 .footer {

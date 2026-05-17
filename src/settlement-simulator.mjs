@@ -53,8 +53,79 @@ export function recordSettlement(task, paymentRequest, txHash) {
   };
 }
 
+export function applyGatewayWebhook(task, event, seenNotificationIds = new Set()) {
+  validateGatewayEvent(event);
+  if (seenNotificationIds.has(event.notificationId)) {
+    return {
+      task,
+      duplicate: true,
+      auditEntry: createAuditEntry(event, 'duplicate_ignored'),
+    };
+  }
+  seenNotificationIds.add(event.notificationId);
+
+  const statusByType = {
+    'gateway.deposit.finalized': 'funded_pending_agent',
+    'gateway.mint.finalized': 'settlement_confirmed',
+    'gateway.mint.forwarded': 'forwarding_confirmed',
+  };
+
+  const auditEntry = createAuditEntry(event, 'accepted');
+  return {
+    task: {
+      ...task,
+      status: statusByType[event.type],
+      gateway: {
+        lastEventType: event.type,
+        lastNotificationId: event.notificationId,
+        amount: event.amount,
+        walletAddress: event.walletAddress,
+      },
+      auditLog: [...(task.auditLog || []), auditEntry],
+    },
+    duplicate: false,
+    auditEntry,
+  };
+}
+
+export function createMockGatewayEvent(task, overrides = {}) {
+  const type = overrides.type || 'gateway.deposit.finalized';
+  return {
+    notificationId: overrides.notificationId || `${task.id}-deposit-001`,
+    type,
+    taskId: task.id,
+    amount: overrides.amount || task.budgetUsdc,
+    walletAddress: overrides.walletAddress || '0x0000000000000000000000000000000000000000',
+    finalizedAt: overrides.finalizedAt || new Date().toISOString(),
+  };
+}
+
 export function toAtomicUsdc(amount) {
   return String(Math.round(Number(amount) * 10 ** DEFAULT_USDC_DECIMALS));
+}
+
+function validateGatewayEvent(event) {
+  const allowedTypes = new Set([
+    'gateway.deposit.finalized',
+    'gateway.mint.finalized',
+    'gateway.mint.forwarded',
+  ]);
+  if (!event || !event.notificationId || !event.type) {
+    throw new Error('gateway event must include notificationId and type');
+  }
+  if (!allowedTypes.has(event.type)) {
+    throw new Error(`unsupported gateway event type: ${event.type}`);
+  }
+}
+
+function createAuditEntry(event, action) {
+  return {
+    action,
+    notificationId: event.notificationId,
+    eventType: event.type,
+    amount: event.amount,
+    recordedAt: new Date().toISOString(),
+  };
 }
 
 function roundUsdc(amount) {
